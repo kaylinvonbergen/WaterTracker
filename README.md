@@ -1,21 +1,25 @@
 # 💧 Water Tracker App
 
 A simple Android Studio app written in Kotlin that helps track your daily water intake.
+- **Minimum SDK:** API 24 (Android 7.0 – Nougat)  
+- **Device Coverage:** ~99.2% of Android devices
+- **Testing Device:** We used a physical Samsung Galaxy S25 Ultra with a wired connection and an emulator for testing.
+
 
 ### App Screenshots
 
 - **Initial state / after reset:**  
-  <img src="waterTracker1.jpg" width="33%" />
+  <img src="waterTracker1.jpg" width="20%" />
 
 - **After pressing the Add Glass button 6 times:**  
-  <img src="waterTracker6.jpg" width="33%" />
+  <img src="waterTracker6.jpg" width="20%" />
 
 - **Goal reached:**  
-  <img src="waterTracker4.jpg" width="33%" />
-  <img src="waterTracker5.jpg" width="33%" />
+  <img src="waterTracker4.jpg" width="20%" />
+  <img src="waterTracker5.jpg" width="20%" />
 
 - **Past the goal:**  
-  <img src="waterTracker2.jpg" width="33%" />
+  <img src="waterTracker2.jpg" width="20%" />
 
 
 ### What makes Compose declarative?
