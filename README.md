@@ -15,8 +15,25 @@ To avoid a fragmented source of truth (which is often common in XML Views), in o
 
 We specifically use `rememberSaveable` so that the user's progress isn't lost during configuration changes, such as screen rotation. This ensures the UI is a constant reflection of the state, preventing "illegal states" where the data and the display might otherwise desync.
 
+### Stateless vs Stateful Components
+
+| Composable Name                     | Stateful | Stateless |
+|------------------------------------|:--------:|:---------:|
+| WaterTrackerApp                    | ✅       |           |
+| WaterTrackerScreen                 |          | ✅        |
+| WaterCounterCard                   |          | ✅        |
+| GoalStatusText                     | ✅       |           |
+| WaterCounterCardPreviewUnfulfilled |          | ✅        |
+| WaterCounterCardPreviewFulfilled   |          | ✅        |
+
+### How Jetpack Compose Differs from XML + View Logic
+
+In the Android SDK, the XML + View logic workflow requires a developer to separate the UI of the app from the code that controls its behavior. In this approach, views must be manually updated when data changes and aren’t dynamic. Jetpack Compose instead uses dynamic, composable functions that are driven by state, providing built-in reactivity and automatic UI updates when state changes.
+
+One example of these differences is that if our app was using XML + View logic instead of Jetpack Compose, we’d have to write code that manually changes the UI elements each time the user presses the “Add Glass” button, rather than allowing state to handle this change automatically.
+
 
 ### AI statement 
 This README was read over by Gemini, and some grammatical and stylistic changes were accepted. 
 
-Anna's portions of the code were also inserted into Gemini as a "third" pair of eyes, to ensure coding conventions were upheld and nothing was done in a blatantly suboptimal way. It provided the reminder to use "rememberSaveable" (found in textbook ch. 22) on a varaible I had forgotten to add it to. This was before our code was integrated, so it negated an integration issue before it happened. Other suggestions involved things outside the scope of the assignment. 
+Anna's portions of the code were also inserted into Gemini as a "third" pair of eyes, to ensure coding conventions were upheld and nothing was done in a blatantly suboptimal way. It provided the reminder to use "rememberSaveable" (found in textbook ch. 22) on a varaible I had forgotten to add it to. This was before our code was integrated, so it negated an integration issue before it happened. Other suggestions involved things outside the scope of the assignment.
