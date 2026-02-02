@@ -5,17 +5,17 @@ A simple Android Studio app written in Kotlin that helps track your daily water 
 ### App Screenshots
 
 - **Initial state / after reset:**  
-  [waterTracker1]
+  <img src="waterTracker1.jpg" width="33%" />
 
 - **After pressing the Add Glass button 6 times:**  
-  [waterTracker6]
+  <img src="waterTracker6.jpg" width="33%" />
 
 - **Goal reached:**  
-  [waterTracker4]  
-  [waterTracker5]
+  <img src="waterTracker4.jpg" width="33%" />
+  <img src="waterTracker5.jpg" width="33%" />
 
 - **Past the goal:**  
-  [waterTracker2]
+  <img src="waterTracker2.jpg" width="33%" />
 
 
 ### What makes Compose declarative?
