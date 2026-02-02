@@ -19,4 +19,4 @@ We specifically use `rememberSaveable` so that the user's progress isn't lost du
 ### AI statement 
 This README was read over by Gemini, and some grammatical and stylistic changes were accepted. 
 
-Anna's portions of the code were also inserted into Gemini as a "third" pair of eyes, to ensure coding conventions were upheld and nothing was done in a blatantly suboptimal way. 
+Anna's portions of the code were also inserted into Gemini as a "third" pair of eyes, to ensure coding conventions were upheld and nothing was done in a blatantly suboptimal way. It provided the reminder to use "rememberSaveable" (found in textbook ch. 22) on a varaible I had forgotten to add it to. This was before our code was integrated, so it negated an integration issue before it happened. Other suggestions involved things outside the scope of the assignment. 
