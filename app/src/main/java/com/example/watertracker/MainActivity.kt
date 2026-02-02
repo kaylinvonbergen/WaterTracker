@@ -49,8 +49,8 @@ fun WaterTrackerApp(modifier: Modifier = Modifier) {
 fun WaterTrackerScreen(modifier: Modifier = Modifier) {
     /*
      TODO:
-     - Create state to remember glasses drank
-     - Create lambda callback for adding a glass
+     - state to remember glasses drank
+     - lambda callback for adding a glass
      */
 
     Column(
@@ -61,7 +61,7 @@ fun WaterTrackerScreen(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Water Tracker",
+            text = "💧Water Tracker💧",
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -81,7 +81,7 @@ fun WaterTrackerScreen(modifier: Modifier = Modifier) {
 // UI
 @Composable
 fun WaterCounterCard(
-    title: String, // app title
+    title: String, // app title << Water Tracker >>
     drankGlasses: Int,
     goalGlasses: Int,
     goalReached: Boolean,
@@ -90,16 +90,21 @@ fun WaterCounterCard(
 ) {
 
      // TODO:
-     // Display dynamic text (X / Y glasses)
-     // Button that calls onAddGlass()
+     // display dynamic text ( drankGlasses / goalGlasses)
+     // button that calls onAddGlass()
 
 
-    Column(modifier = modifier.padding(16.dp)) {
+    Column(
+        modifier = modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(text = title)
         Text(text = "Glasses: $drankGlasses / $DEFAULT_GOAL_GLASSES")
+
         Spacer(modifier = Modifier.height(18.dp))
+
         Button(onClick = onAddGlass) {
-            Text(text = "Add Glass")
+            Text(text = "+ Add Glass")
         }
     }
 }
