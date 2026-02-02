@@ -2,6 +2,21 @@
 
 A simple Android Studio app written in Kotlin that helps track your daily water intake.
 
+### App Screenshots
+
+- **Initial state / after reset:**  
+  [waterTracker1]
+
+- **After pressing the Add Glass button 6 times:**  
+  [waterTracker6]
+
+- **Goal reached:**  
+  [waterTracker4]  
+  [waterTracker5]
+
+- **Past the goal:**  
+  [waterTracker2]
+
 
 ### What makes Compose declarative?
 Compose is declarative as it conceptually regenerate the entire screen from scratch when data changes, as opposed to a an imperative model, wherein developers act like a maunal middleman by capturing View objects and issuing explicit commands. 
