@@ -16,6 +16,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.text.style.TextAlign
 
 
 
@@ -50,10 +53,10 @@ class MainActivity : ComponentActivity() {
 fun WaterTrackerApp(modifier: Modifier = Modifier) {
     // requirement: Use remember { mutableStateOf(...) } to store state
     // glassesCount tracks the numerical progress
-    var glassesCount by remember { mutableStateOf(DEFAULT_START_GLASSES) }
+    var glassesCount by rememberSaveable { mutableStateOf(DEFAULT_START_GLASSES) }
 
     // requirement: A second piece of state (Boolean) for the Switch
-    var notificationsEnabled by remember { mutableStateOf(false) }
+    var notificationsEnabled by rememberSaveable { mutableStateOf(false) }
 
     // passing state down to the Stateless Screen (State Hoisting)
     WaterTrackerScreen(
@@ -61,6 +64,7 @@ fun WaterTrackerApp(modifier: Modifier = Modifier) {
         count = glassesCount,
         isNotificationsOn = notificationsEnabled, // pass it down
         onIncrement = { glassesCount++ }, // Lambda to update state
+        onReset = { glassesCount = 0},
         onToggleNotifications = { notificationsEnabled = it } // Lambda to update state
     )
 }
@@ -76,6 +80,7 @@ fun WaterTrackerScreen(
     count: Int,
     isNotificationsOn: Boolean,
     onIncrement: () -> Unit,
+    onReset: () -> Unit,
     onToggleNotifications: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -118,23 +123,20 @@ fun WaterTrackerScreen(
             drankGlasses = count,
             goalGlasses = DEFAULT_GOAL_GLASSES,
             goalReached = isGoalReached,
-            onAddGlass = onIncrement
+            onAddGlass = onIncrement,
+            resetGlasses = onReset
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
 
         // checks if goal met or if there's more glasses to go
-        val glassesRemaining = if (count >= DEFAULT_GOAL_GLASSES) {
-            0
-        } else {
-            DEFAULT_GOAL_GLASSES - count
-        }
+        val glassesRemaining = DEFAULT_GOAL_GLASSES - count
 
         // Requirement: dynamic text updates automatically when state changes
         GoalStatusText(
             goalReached = isGoalReached,
-            remainingGlasses = glassesRemaining
+            glassesRemaining = glassesRemaining
 
         )
     }
@@ -148,26 +150,26 @@ fun WaterCounterCard(
     goalGlasses: Int,
     goalReached: Boolean,
     onAddGlass: () -> Unit, //lambda
+    resetGlasses: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-     // TODO:
-     // display dynamic text ( drankGlasses / goalGlasses)
-     // button that calls onAddGlass()
-
 
     Column(
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = title)
-        Text(text = "Glasses: $drankGlasses / $DEFAULT_GOAL_GLASSES")
+        Text(text = "Glasses: $drankGlasses / $goalGlasses")
 
         Spacer(modifier = Modifier.height(18.dp))
 
         Button(onClick = onAddGlass) {
             Text(text = "+ Add Glass")
         }
+        Button(onClick = resetGlasses) {
+            Text(text = "Reset")
+        }
+
     }
 }
 
@@ -175,11 +177,38 @@ fun WaterCounterCard(
 @Composable
 fun GoalStatusText(
     goalReached: Boolean,
-    remainingGlasses: Int,
-    modifier: Modifier = Modifier)
-    {
+    glassesRemaining: Int,
+    modifier: Modifier = Modifier
+) {
+    var showPopUp by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(goalReached) {
+        if (goalReached) showPopUp = true
+    }
+    val statusText = if (goalReached && glassesRemaining < 0) {
+        "Wow! You're on a roll!" // if user drinks /more/ than goal
+    } else if (goalReached) {
+        "Today's Goal Reached! 🎉" // if user drinks exactly goal
+    } else {
+        " "
+    }
 
-    //TODO, appears on goal reached ?
+    Text(
+        text = statusText,
+        modifier = modifier,
+        textAlign = TextAlign.Center
+    )
+    if (showPopUp) { //popup
+        AlertDialog(
+            onDismissRequest = { showPopUp = false },
+            title = { Text("Congrats!") },
+            text = { Text("You've reached your goal today!") },
+            confirmButton = {
+                TextButton(onClick = { showPopUp = false }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
 }
 
 /**
@@ -192,13 +221,17 @@ fun WaterCounterCardPreviewUnfulfilled() {
 
     // feed the stateless card "fake" data to see it in action
     // previewing with goal unachieved
-    WaterCounterCard(
-        title = "Preview (Not Done)",
-        drankGlasses = 3,
-        goalGlasses = 8,
-        goalReached = false,
-        onAddGlass = {} // Empty lambda for preview
-    )
+    WaterTrackerTheme {
+        WaterCounterCard(
+            title = "Preview (Not Done)",
+            drankGlasses = 3,
+            goalGlasses = 8,
+            goalReached = false,
+            onAddGlass = {}, // Empty lambda for preview
+            resetGlasses = {}
+
+        )
+    }
 
 }
 
@@ -212,7 +245,8 @@ fun WaterCounterCardPreviewFulfilled() {
             drankGlasses = 8,
             goalGlasses = 8,
             goalReached = true,
-            onAddGlass = {}
+            onAddGlass = {},
+            resetGlasses = {}
         )
     }
 }
