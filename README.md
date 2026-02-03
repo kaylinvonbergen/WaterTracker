@@ -15,8 +15,8 @@ A simple Android Studio app written in Kotlin that helps track your daily water 
   <img src="waterTracker6.jpg" width="20%" />
 
 - **Goal reached:**  
-  <img src="waterTracker4.jpg" width="20%" />
   <img src="waterTracker5.jpg" width="20%" />
+  <img src="waterTracker4.jpg" width="20%" />
 
 - **Past the goal:**  
   <img src="waterTracker2.jpg" width="20%" />
